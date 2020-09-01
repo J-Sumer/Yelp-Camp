@@ -1,0 +1,32 @@
+<%- include('partials/header') %>
+<div >
+	<div id="new-top-div">
+		<div style="font-size: 120%;color:white; font-weight:bold ; padding:20px 0 10px 0">Create a new Camp Ground</div>
+
+		<form method='POST' action="/campgrounds">
+			<div style="padding-top:10px">
+				<input style="border-radius:20px; border:1px solid grey" type='text' name='name' placeholder='  name'>
+			</div>
+			<div style="padding-top:10px">
+				<input style="border-radius:20px; border:1px solid grey" type='text' name='image' placeholder='  url of the image'>
+			</div>
+			<div style="padding-top:10px">
+				<input style="border-radius:20px; border:1px solid grey" type='number' name='cost' placeholder='Price'>
+			</div>
+			<div style="padding-top:10px">
+				<input style="border-radius:20px; border:1px solid grey" type='text' name='location' placeholder='CampGround Location'>
+			</div>
+			<div style="padding-top:10px">
+				<input style="height:100px;border-radius:20px; border:1px solid grey" type='text' name='description' placeholder='Description'>
+			</div>
+
+
+			<button class="btn btn-primary" style=" border-radius:50px;margin-left:% ; margin-top:20px; margin-bottom:50px;">Submit</button>
+		</form>
+
+		<a href='/' style="color:white">Go back</a>
+	</div>
+</div>
+
+
+<%- include('partials/footer') %>

@@ -1,0 +1,11 @@
+<%- include ('partials/header') %>
+<h1>
+	Add a comment
+</h1>
+
+<form method="POST" action='/comments/<%= campground._id %>'>
+	<textarea name='comment[text]' placeholder='add your comment here'>heres</textarea>
+	<input type='submit'>
+</form>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,112 @@
+<%- include ('partials/header') %>
+
+<div class='container-fluid show-page' style="width: 90%;">
+	<div class="row">
+		
+		
+		
+		<div class="col-md-9 col-sm-12">
+			<h1 style="font-family: 'Lobster', cursive;"><%= campground.name %></h1>
+			
+			<div style="border: 1px solid grey ; border-radius:5px;margin-bottom: 10px;">
+				<img src='<%= campground.image %>' style="width:100% ; padding-bottom:20px;">
+				<div style="padding-left: 10px;">
+					<p><b>Description </b> - <%= campground.description %>
+					</p>
+				</div>
+				<div>
+					<h5 style=" float : right; padding-right: 10px;">-$<%=  campground.cost %>/Night</h5>
+				</div>
+				<div style="width: 100%; padding: 5px; margin-left: 5px;">
+					Added by -<em> <%= campground.author.username %> , <%= moment(campground.createdAt).fromNow() %></em>
+				</div>
+				<% if(currentUser && campground.author.id.equals(currentUser.id)){ %>
+					<a class="btn btn-warning mx-2 mb-2" style="width:5vw;font-size:70%;min-width:max-content;float:left" href="/campgrounds/<%= campground.id %>/edit">Edit</a>
+					<form action="/campgrounds/<%= campground.id %>?_method=DELETE" method="POST">
+						<input class="btn btn-danger mx-2" style="width:5vw;font-size:70%;min-width:max-content;float:right;" type="submit" value="Delete">
+					</form>
+					<div style="clear:right;height:10px;"></div>
+				
+				<% } %>
+			</div>
+			
+			
+			<div style="background-color:#d1d1d1 ; padding : 5px; border-radius: 3px; font-size:80%">
+				<p>
+					<b>Comments:</b>
+				</p>
+				<% campground.comments.forEach((comment) => { %>
+				<div style="padding-left:20px;">
+					<div>
+						<div>
+							<b><%= comment.author.username %></b> -
+						</div>
+						<div style="float:right">
+							<p>
+								<%= moment(comment.createdAt).fromNow() %>
+							</p>
+						</div>
+					</div>
+					 
+					<p style="padding-left:20px; margin-bottom:0px">
+						<%= comment.text %> 
+					</p>
+					<% if(currentUser && comment.author.id.equals(currentUser.id)){ %>
+						<a href="/comments/<%=  comment.id %>/<%= campground.id %>/edit" style="font-size:80%">Edit</a>
+						<a href="/comments/<%=  comment.id %>/<%= campground.id %>/delete" style="font-size:80%">Delete</a>	
+					<% } %>
+					
+					
+				</div>
+				<% }) %>
+				<div style="text-align:right">	
+						<a class="btn btn-primary" href='/comments/<%= campground._id %>' style="width: content-width;font-size: 90%">Add a comment</a>
+				</div>
+			</div>
+		</div>
+		
+		<div class="col-md-3 col-sm-12" style="padding-top:50px;">
+			<p style="text-align:center">Yelp Camp</p>
+			<div class="list-group">
+			  <a href="#" class="list-group-item list-group-item-action active" style="padding: .5rem 1rem;" >Info 1 </a>
+			  <a href="#" class="list-group-item list-group-item-action" style="padding: .5rem 1rem;">Info 2</a>
+			  <a href="#" class="list-group-item list-group-item-action" style="padding: .5rem 1rem;">Info 3</a>
+			</div>
+			<div id="map"></div>
+		</div>
+	</div>
+</div>
+
+
+<script>
+  function initMap() {
+    // var lat = <%= campground.lat %>;
+    // var lng = <%= campground.lng %>;
+    var lat =  campground.lat 
+    var lng =  campground.lng 
+    var center = {lat: lat, lng: lng }; 
+    var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 8,
+        center: center,
+        scrollwheel: false
+    });
+    var contentString = `
+      <strong><%= campground.name %><br />
+      <%= campground.location %></strong>
+      <p><%= campground.description %></p>
+    `
+    var infowindow = new google.maps.InfoWindow({
+      content: contentString
+    });
+    var marker = new google.maps.Marker({
+        position: center,
+        map: map
+    });
+    marker.addListener('click', function() {
+      infowindow.open(map, marker);
+    });
+  }
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8RhoIC8R69jaOumdD4yLakj5l2e_eG8k&callback=initMap"></script>
+
+<%- include('partials/footer') %>

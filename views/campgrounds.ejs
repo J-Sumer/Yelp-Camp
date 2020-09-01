@@ -1,0 +1,26 @@
+<%- include ('partials/header') %>
+
+<div class='container'>
+	<div class='campground-top-div text-center mt-2 py-3 br rounded'>
+		<h1>All the campgrounds</h1>
+	</div>
+	
+	<div class="row mt-3">
+		<% campgrounds.forEach((campground)=>{ %>
+		<div class="col-md-3 col-sm-6 text-center mb-3">
+			<div class="card">
+				<img src="<%= campground.image %>" class="card-img-top" >
+				<div class="card-body">
+					<h6 class="card-title"><%= campground.name %></h6>
+					<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+					<a href="/campgrounds/<%= campground._id %>" class="btn btn-primary details-btn">Details</a>
+				</div>
+			</div>
+		</div>
+		<% }) %>
+	</div>
+</div>
+
+
+
+<%- include ('partials/footer') %>
